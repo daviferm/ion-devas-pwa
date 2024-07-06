@@ -1,0 +1,7 @@
+{
+  "name": "utedevas-tabs18",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
