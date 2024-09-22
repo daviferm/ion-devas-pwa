@@ -1,0 +1,6 @@
+<app-navbar [pageActive]="pageSelected"></app-navbar>
+
+<ion-content>
+</ion-content>
+
+<app-mapa [zoomMap]="zoom" [centroMap]="centroMap" [mostrarMarker]="mostrarMarker" [marcador]="marcador" [itemsBarrio]="itemsBarrio" (closeMap)="visionMapaGeneral()" (mapaItems)="mostrarBarrio($event)"></app-mapa>

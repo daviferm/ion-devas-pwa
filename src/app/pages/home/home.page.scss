@@ -1,0 +1,35 @@
+
+ion-tab-bar {
+  --background: transparent;
+  ion-icon {
+      margin-bottom: 1rem !important;
+  }
+}
+
+.ion-spinner {
+  position: absolute !important;
+  top: 40%!important;
+  left: calc(50% - 2px);
+}
+
+.ion-oscuro {
+    color: var(--ion-color-babs);
+}
+// .ion-claro {
+//     --color: var(--ion-color-dark) !important;
+// }
+.icon-refresh {
+  animation-name: rotar;
+  animation-duration: .6s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes rotar {
+  from {
+      transform: rotate(0);
+  }
+  to {
+      transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,136 @@
+<app-navbar [pageActive]="pageSelected"></app-navbar>
+
+<ion-content [fullscreen]="true">
+    <main class="main">
+        @if ( cardUno ) {
+
+          <div>
+              <ion-card>
+                  <ion-card-header>
+                      <ion-card-subtitle> INCIDENCIAS DE POSICIÓN </ion-card-subtitle>
+                      <ion-card-title>Soporte</ion-card-title>
+                  </ion-card-header>
+
+                  <ion-card-content>
+                      <ion-text color="dark">
+                          <p class="ion-p ion-text-justify">
+                              Si necesitas modificar la posición de un parquímetro existente buscalo en el formulario superior y modifica su posición arrastrando el marcador.
+                          </p>
+                      </ion-text>
+                      <ion-text color="dark">
+                          <p class="ion-p ion-text-justify">
+                              Si se trata de un parquímetro que no esta en la base de datos, escribe el número en el apartado de abajo, pulsa el botón de abajo y arrastra el marcador hacia su posición.
+                          </p>
+                      </ion-text>
+
+                      <ion-label position="fixed">Escribe el número</ion-label>
+                      <ion-input class="in-slide-one" autocomplete="off" autofocus="false" clearInput="true" color="dark" type="number" (ionChange)="changeInput($event)"></ion-input>
+
+                      <ion-button class="btn-map" size="large" color="medium" fill="outline" (click)="mostrarMapa()">
+                          <ion-icon name="map-outline"></ion-icon>
+                          <p>
+                              Mostrar mapa
+                          </p>
+                      </ion-button>
+                  </ion-card-content>
+              </ion-card>
+          </div>
+
+        } @else {
+          <div class="slice-two">
+            <ion-card class="card-two">
+                <ion-card-header>
+                    <ion-card-title>Actualizar</ion-card-title>
+                    <ion-item>
+                        <ion-searchbar autocomplete="off" debounce="250" type="number" (ionChange)="ionChangeSearch($event)"></ion-searchbar>
+                        <ion-button class="btn-search" fill="outline" color="success" (click)="buscarItem()">Buscar</ion-button>
+                    </ion-item>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <form ngNativeValidate (ngSubmit)="actualizar(form)" #form="ngForm">
+                        <ion-list>
+                            <ion-item>
+                                <ion-label position="fixed">Alias:</ion-label>
+                                <ion-input color="primary" class="in-slide-two" name="alias" [(ngModel)]="marcador.alias" required aria-label="alias"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="fixed">Barrio:</ion-label>
+                                <ion-input color="primary" class="in-slide-two" name="barrio" [(ngModel)]="marcador.barrio" required aria-label="barrio"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="fixed">Dirección:</ion-label>
+                                <ion-input color="primary" class="in-slide-two" name="direccion" [(ngModel)]="marcador.direccion" required aria-label="direccion"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="fixed">Fabricante:</ion-label>
+                                <ion-input color="primary" class="in-slide-two" name="fabricante" [(ngModel)]="marcador.fabricante" required aria-label="fabricante"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="fixed">Empresa:</ion-label>
+                                <ion-input color="primary" class="in-slide-two" name="empresa" [(ngModel)]="marcador.empresa" required aria-label="empresa"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="fixed">Tarifa:</ion-label>
+                                <ion-input color="primary" class="in-slide-two" name="tarifa" [(ngModel)]="marcador.tarifa" required aria-label="tarifa"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="fixed">Latitud:</ion-label>
+                                <ion-input color="primary" class="in-slide-two" name="latitud" [(ngModel)]="marcador.latitud" required aria-label="latitud"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="fixed">Longitud:</ion-label>
+                                <ion-input color="primary" class="in-slide-two" name="longitud" [(ngModel)]="marcador.longitud" required aria-label="longitud"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="fixed">Estado:</ion-label>
+                                <ion-input color="primary" class="in-slide-two" name="estado" [(ngModel)]="marcador.estado" required aria-label="Estado"></ion-input>
+                            </ion-item>
+                            <ion-list>
+                                <ion-item>
+                                    <ion-label> Nuevo </ion-label>
+                                    <ion-checkbox slot="start" #nuevo (ionChange)="ionChangeCheckbox($event)" aria-label="nuevo"></ion-checkbox>
+                                    <ion-button class="btn-actualizar" type="sutmit" size="small" fill="outline">
+                                        <div #update class="icon-update">
+                                            <ion-icon name="sync-outline" slot="start"></ion-icon>
+                                        </div>
+                                        Actualizar
+                                    </ion-button>
+                                </ion-item>
+                            </ion-list>
+                        </ion-list>
+                    </form>
+                </ion-card-content>
+            </ion-card>
+        </div>
+        <ion-fab class="fab-card-two" slot="fixed" vertical="top" horizontal="end">
+          <ion-fab-button>
+            <ion-icon name="chevron-back-circle"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-list side="start">
+            <ion-fab-button (click)="volverMapa()">
+              <ion-icon name="map-outline"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button (click)="volverCardUno()">
+              <ion-icon name="id-card-outline"></ion-icon>
+            </ion-fab-button>
+          </ion-fab-list>
+        </ion-fab>
+
+        }
+    </main>
+
+</ion-content>
+@if ( mapSearch ) {
+  <app-mapa *ngIf="mapSearch" [centroMap]="centroMapa"  [zoomMap]="zoomMap" [markerSoport]="marcador"  (sendCoords)="getCoords($event)" (closeMap)="cerrarMana($event)"></app-mapa>
+  <ion-fab class="animated fadeIn fast btn-w btn-send" vertical="bottom" horizontal="end" slot="fixed" (click)="enviarPosicion()">
+      <ion-fab-button class="btn-send" color="success" >
+          <ion-icon name="logo-whatsapp"></ion-icon>
+      </ion-fab-button>
+  </ion-fab>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button class="btn-next" color="secondary" (click)="nextSlide()">
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+}
