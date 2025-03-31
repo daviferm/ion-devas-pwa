@@ -38,6 +38,8 @@ export class SearchPage implements OnInit {
 
   ngOnInit() {
 
+    // this.dataFormService.obtenerAvisos();
+
     this.dataFormService.enviarPageHome.subscribe( (mark: Parquimetro) => {
       this.zoom = 12;
       // this.marcadores = [ mark ];
@@ -56,6 +58,7 @@ export class SearchPage implements OnInit {
         this.zoom = 14;
       }, 100 );
     } )
+
   }
 
   // cerrarMapa( event: any ) {

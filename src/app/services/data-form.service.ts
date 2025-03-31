@@ -35,6 +35,35 @@ export class DataFormService {
 
   }
 
+  obtenerAvisos() {
+
+    // const data = from( fetch('http://localhost:3049/login', ) );
+    // data.subscribe( async(resp) => {
+    //   const body = await resp;
+    //   console.log(body);
+    // } )
+    const url = 'http://localhost:3049/login';
+    const phpSessionId = 'b36ebef9047515597677ae0f31d665ad';
+
+    fetch(url, {
+      method: 'GET', // O 'POST', 'PUT', etc., según lo que necesites
+      credentials: 'include', // Esto es importante para incluir cookies en la petición
+      headers: {
+        'Cookie': `PHPSESSID=${phpSessionId}`,
+        // Puedes agregar otros headers si es necesario
+        // 'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json()) // O .text() si esperas texto plano
+      .then(data => {
+        console.log('Datos recibidos:', data);
+      })
+      .catch(error => {
+        console.error('Error en la petición:', error);
+      });
+
+
+  }
 
   getParkimetro(barrio: string, numero?: any): Parquimetro | null {
 
@@ -203,3 +232,5 @@ export class DataFormService {
 
 
 }
+
+
